@@ -7,6 +7,7 @@
 * Tasks
     - id
     - name
+    - détails
     - Date
     - Etat
 * Etiquette
