@@ -37,7 +37,21 @@ describe 'Fonction de gestion des tâches', type: :system do
         visit tasks_path
         click_on 'Show'
         expect(page).to have_content "I'm description"
+      end
     end
   end
 end
+
+describe 'Fonction de gestion des tâches', type: :system do
+  describe 'Nouvelle fonction de création' do
+    context "teste l'affichage" do
+      it "Verifier l'odre de classement" do
+        task = FactoryBot.create(:task, name: "123", details: "456")
+        task2 = FactoryBot.create(:task, name: "3a21", details: "654")
+        visit tasks_path
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content "3a21"
+      end
+    end
+  end
 end
