@@ -28,3 +28,16 @@ describe 'Fonction de gestion des tâches', type: :system do
     end
   end
 end
+
+describe 'Fonction de gestion des tâches', type: :system do
+  describe 'Nouvelle fonction de création' do
+    context "Lors de l'affichage des details d'une tache" do
+      it "Je cree et j'obtient les details" do
+        task = FactoryBot.create(:task)
+        visit tasks_path
+        click_on 'Show'
+        expect(page).to have_content "I'm description"
+    end
+  end
+end
+end
