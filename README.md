@@ -1,15 +1,8 @@
-# Plateforme de gestion de tâches avec possibilité d'administrateur et d'utilisateur
-# Structuration de la base de donnée (bêta)
-* Users
-    - id
-    - Name
-    - Password
-* Tasks
-    - id
-    - name
-    - détails
-    - Date
-    - Etat
-* Etiquette
-    - id_users
-    - id_tasks
+
+# Pour deployer l'application
+[heroku app online](https://infinite-coast-44805.herokuapp.com/)
+* heroku login
+* heroku create
+* git add .
+* git commit -m "first commit"
+* git push heroku master
