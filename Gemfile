@@ -10,6 +10,9 @@ gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 4.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
+# gem 'kaminari', '~>1.2', '>=1.2.1'
+gem 'kaminari', :git => 'https://github.com/kaminari/kaminari'
+
 
 
 gem 'bootsnap', '>= 1.4.2', require: false

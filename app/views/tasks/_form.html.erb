@@ -27,6 +27,17 @@
     <%= form.date_field :expired_at %> 
   </div>
 
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.select :status, ['', 'Unstarted', 'In progress', 'Completed'] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.select :priority, Task.priorities.keys %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>
