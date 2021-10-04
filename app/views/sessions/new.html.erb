@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <div class="text-center">
+    <span class="fs-3 px-5 py-3" style="background-color: #007693; font-family: 'ZCOOL KuaiLe', cursive;"> Se Connecter</span>
+  </div>
+</div>
+<%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+<div class="container mt-5">
+  <div class="row">
+    <%= f.label :email, class: "form-label"%>
+    <%= f.email_field :email, class: "form-control"%>
+  </div>
+  <div class="row">
+    <%= f.label :password, class: "form-label"%>
+    <%= f.password_field :password, class: "form-control"%>
+  </div>
+  <div class="text-center mt-5">
+    <%= f.submit "Je me connecte", class: "btn btn-success py-2 px-5 ms-5 mt-5"%>
+  </div>
+  <div class="text-center mt-3 ms-5">
+    <a class="fs-6 px-3 py-1 btn btn-primary" href="<%=new_user_path%>" style="background-color: #007693; font-family: 'ZCOOL KuaiLe', cursive;">Je n'ai pas de compte</a>
+  </div>
+</div>
+<% end%>

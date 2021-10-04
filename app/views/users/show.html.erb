@@ -1,0 +1,6 @@
+<div class="container d-flex justify-content-between">
+  <div class="fs-2 text-center">
+    Bienvenue <span style="background-color: #007693; font-family: 'ZCOOL KuaiLe', cursive;"><%=@user.name%></span>
+  </div>
+  <%= link_to "Logout", session_path(current_user.id), method: :DELETE, class: "btn btn-danger mt-2"%>
+</div>
