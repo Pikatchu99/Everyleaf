@@ -1,25 +1,27 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
 
-  # GET /tasks or /tasks.json
   def index
-    @tasks = Task.order('created_at DESC')
+    # raise
+    if params[:by_deadline] == "true"
+      @tasks = Task.order('expired_at DESC').page params[:page]
+    elsif params[:by_priority] == "true"
+      @tasks = Task.order('priority DESC').page params[:page]
+    else
+      @tasks = Task.order('created_at DESC').page params[:page]
+    end
   end
 
-  # GET /tasks/1 or /tasks/1.json
   def show
   end
 
-  # GET /tasks/new
   def new
     @task = Task.new
   end
 
-  # GET /tasks/1/edit
   def edit
   end
 
-  # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
 
@@ -34,7 +36,6 @@ class TasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
       if @task.update(task_params)
@@ -47,7 +48,6 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /tasks/1 or /tasks/1.json
   def destroy
     @task.destroy
     respond_to do |format|
@@ -56,14 +56,91 @@ class TasksController < ApplicationController
     end
   end
 
+
+  # def search
+  #   session[:search] = {'name' => params[:search_title], 'status' => params[:search_status], 'priority' => params[:search_priority]}
+  #   if params[:search_title].present?
+  #     if params[:search_status].present?
+  #       if params[:search_priority].present?
+  #         @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status]).order_by_priority(params[:search_priority])
+  #       else
+  #         @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status])
+  #       end
+  #     elsif params[:search_priority].present?
+  #       @tasks = Task.all.title_search(params[:search_title]).order_by_priority(params[:search_priority])
+  #     else
+  #       @tasks = Task.all.title_search(params[:search_title])
+
+  #     end
+  #   elsif params[:search_status].present?
+      
+  #     if params[:search_priority].present?
+  #       @tasks = Task.all.order_by_status(params[:search_status]).order_by_priority(params[:search_priority])
+  #     else
+  #       @tasks = Task.all.order_by_status(params[:search_status])
+  #     end
+  #   elsif params[:search_priority].present?
+      
+  #     if params[:search_status].present?
+  #       @tasks = Task.all.order_by_priority(params[:search_priority]).order_by_status(params[:search_status])
+  #     else
+  #       @tasks = Task.all.order_by_priority(params[:search_priority])
+  #     end
+  #   else
+  #     @tasks = Task.all
+  #   end
+  #   # @labels = Label.where(user_id: nil).or(Label.where(user_id: current_user.id))
+  #   render :index
+  # end
+
+
+  def search 
+    session[:search] = {'name' => params[:search_title], 'status' => params[:search_status], 'priority' => params[:search_priority]}
+   
+    if params[:search_title].present?
+      if params[:search_status].present?
+        if params[:search_priority].present?
+          @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).page params[:page] 
+        else
+          @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status]).page params[:page] 
+        end
+      elsif params[:search_priority].present?
+        @tasks = Task.all.title_search(params[:search_title]).order_by_priority(params[:search_priority]).page params[:page] 
+      else
+        @tasks = Task.all.title_search(params[:search_title]).page params[:page] 
+
+      end
+    elsif params[:search_status].present?
+      
+      if params[:search_priority].present?
+        @tasks = Task.all.order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).page params[:page] 
+      else
+        @tasks = Task.all.order_by_status(params[:search_status]).page params[:page] 
+      end
+    elsif params[:search_priority].present?
+      
+      if params[:search_status].present?
+        @tasks = Task.all.order_by_priority(params[:search_priority]).order_by_status(params[:search_status]).page params[:page] 
+      else
+        @tasks = Task.all.order_by_priority(params[:search_priority]).page params[:page] 
+      end
+    else
+      @tasks = Task.all
+    end
+  
+    # @labels = Label.where(user_id: nil).or(Label.where(user_id: current_user.id))
+    
+    render :index
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_task
       @task = Task.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+
     def task_params
-      params.require(:task).permit(:name, :details)
+      params.require(:task).permit(:name, :details, :expired_at, :status, :priority)
     end
 end

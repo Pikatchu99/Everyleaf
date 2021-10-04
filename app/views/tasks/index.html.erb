@@ -1,28 +1,40 @@
 <div class="pb-5"></div>
+<div class="d-flex">
 <h1>Tasks</h1>
+<div><a href="<%= new_task_path %>" class="btn btn-outline-success mt-2 ms-5">New Task</a></div>
+</div>
 
-<table>
-  <thead>
+
+<table class="table">
+  <thead class="table-primary">
     <tr>
-      <th>Name</th>
-      <th>Details</th>
-      <th colspan="3"></th>
+      <th scope="col">Name</th>
+      <th scope="col">Details</th>
+      <th scope="col"><a href="<%= tasks_path(by_deadline: "true")%> " class="text-primary">DeadLine<i class="bi bi-chevron-down"></i></a></th>
+      <th scope="col">Status</th>
+      <th scope="col"><a href="<%= tasks_path(by_priority: "true")%> " class="text-primary">Priority<i class="bi bi-chevron-down"></i></a></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
         <td class="task_row"><%= task.name %></td>
         <td><%= task.details %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= task.expired_at.to_date %></td>
+        <td><%= task.status %></td>
+        <td><%= task.priority %></td>
+        <td><%= link_to 'Show', task, :class => "btn btn-outline-primary" %></td>
+        <td><%= link_to 'Edit', edit_task_path(task), :class => "btn btn-outline-success" %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<hr>
 
 <br>
+<%= paginate @tasks %>
 
-<%= link_to 'New Task', new_task_path %>
