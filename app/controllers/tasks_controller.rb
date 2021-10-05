@@ -4,11 +4,11 @@ class TasksController < ApplicationController
   def index
     # raise
     if params[:by_deadline] == "true"
-      @tasks = Task.order('expired_at DESC').page params[:page]
+      @tasks = current_user.tasks.order('expired_at DESC').page params[:page]
     elsif params[:by_priority] == "true"
-      @tasks = Task.order('priority DESC').page params[:page]
+      @tasks = current_user.tasks.order('priority DESC').page params[:page]
     else
-      @tasks = Task.order('created_at DESC').page params[:page]
+      @tasks = current_user.tasks.order('created_at DESC').page params[:page]
     end
   end
 
@@ -24,6 +24,8 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
+    # p current_user
 
     respond_to do |format|
       if @task.save

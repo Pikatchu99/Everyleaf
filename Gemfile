@@ -11,6 +11,7 @@ gem 'webpacker', '~> 4.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 # gem 'kaminari', '~>1.2', '>=1.2.1'
+gem 'bcrypt'
 gem 'kaminari', :git => 'https://github.com/kaminari/kaminari'
 
 

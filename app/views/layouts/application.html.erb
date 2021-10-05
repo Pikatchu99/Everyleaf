@@ -26,6 +26,11 @@
         <li class="nav-item">
           <a class="nav-link active text-white" aria-current="page" href="<%= tasks_path %>">Home</a>
         </li>
+        <% if logged_in? %>
+        <li class="nav-item">
+        <%= link_to "Logout", session_path(current_user.id), method: :DELETE, class: "nav-link text-white"%>
+        </li>
+        <% end %>
       </ul>
       <div class="d-flex">
         <%= form_with(url: search_tasks_path, method: :get, local: true) do |f| %>
