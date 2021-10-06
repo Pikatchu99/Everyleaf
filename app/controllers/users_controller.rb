@@ -3,8 +3,12 @@ class UsersController < ApplicationController
   before_action :find_id, only: %i[edit update destroy]
 
   def new
+    if current_user.present?
+      redirect_to tasks_path
+    else
       @user = User.new
     end
+  end
   
   def create
     @user = User.new(user_params)
