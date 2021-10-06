@@ -1,5 +1,24 @@
-<div class="h1 mt-5">Tasks list</div>
-<% if current_user.is_admin %>
+<% if @user.id == current_user.id %>
+<div class="container mt-5" >
+  <div class="card">
+    <h5 class="card-header text-center bg-secondary">Account Details</h5>
+    <div class="card-body">
+      <h5 class="card-title">Your Name: <span   class="ms-5 fs-2" style="font-family: 'Gemunu Libre', sans-serif;"><%= @user.name%></span></h5>
+      <h5 class="card-title">Your E-mail: <span class="ms-5 fs-2" style="font-family: 'Gemunu Libre', sans-serif;"><%= @user.email%></span></h5>
+      <% if @user.is_admin %> <h5 class="card-title">Status: <span class="ms-5 fs-2" style="font-family: 'Gemunu Libre', sans-serif;">Administrateur</span></h5><% end %>
+
+      <% if @user.id == current_user.id %>
+      <a data-confirm="Are you sure?" data-method="delete" href="<%= session_path(current_user.id) %>" class="btn btn-danger text-white">Logout</a>
+      <a href="<%= edit_admin_user_path(current_user.id) %>" class="btn btn-info text-white">Edit</a>
+      
+      <% end %>
+
+    </div>
+  </div>
+</div>
+<% end %>
+
+<% if current_user.is_admin && @user.id != current_user.id %>
 <table class="table mt-5">
   <thead class="table-primary">
     <tr>
