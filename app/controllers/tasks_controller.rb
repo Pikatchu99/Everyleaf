@@ -5,11 +5,11 @@ class TasksController < ApplicationController
   def index
     # raise
     if params[:by_deadline] == "true"
-      @tasks = current_user.tasks.order('expired_at DESC').per(5).page params[:page]
+      @tasks = current_user.tasks.all.order('expired_at DESC').page params[:page]
     elsif params[:by_priority] == "true"
-      @tasks = current_user.tasks.order('priority DESC').page params[:page]
+      @tasks = current_user.tasks.all.order('priority DESC').page params[:page]
     else
-      @tasks = current_user.tasks.order('created_at DESC').page params[:page]
+      @tasks = current_user.tasks.all.order('created_at DESC').page params[:page]
     end
   end
 
@@ -17,6 +17,7 @@ class TasksController < ApplicationController
   end
 
   def new
+    redirect_to tasks_path if current_user
     @task = Task.new
   end
 

@@ -11,7 +11,8 @@
 <table class="table">
   <thead class="table-primary">
     <tr>
-      <th scope="col">Name</th>
+    <th scope="col">Author</th>
+      <th scope="col">Name Tasks</th>
       <th scope="col">Details</th>
       <th scope="col"><a href="<%= tasks_path(by_deadline: "true")%> " class="text-primary">DeadLine<i class="bi bi-chevron-down"></i></a></th>
       <th scope="col">Status</th>
@@ -24,6 +25,7 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
+      <td class="task_row"><%= task.user.name %></td>
         <td class="task_row"><%= task.name %></td>
         <td><%= task.details %></td>
         <td><%= task.expired_at.to_date %></td>
