@@ -17,7 +17,6 @@ class TasksController < ApplicationController
   end
 
   def new
-    redirect_to tasks_path if current_user
     @task = Task.new
   end
 
