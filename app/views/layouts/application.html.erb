@@ -12,6 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap" rel="stylesheet">
+
   </head>
 
   <body style="font-family: 'Josefin Sans', sans-serif;">
@@ -27,6 +29,13 @@
           <a class="nav-link active text-white" aria-current="page" href="<%= tasks_path %>">Home</a>
         </li>
         <% if logged_in? %>
+        <li class="nav-item">
+        <% if current_user.is_admin %>
+        <a class="nav-link text-white" aria-current="page" href="<%= admin_user_path(current_user.id) %>">My Account</a>
+        <% else %>
+          <a class="nav-link text-white" aria-current="page" href="<%= user_path(current_user.id) %>">My Account</a>
+          <% end %>
+        </li>
         <li class="nav-item">
         <%= link_to "Logout", session_path(current_user.id), method: :DELETE, class: "nav-link text-white"%>
         </li>

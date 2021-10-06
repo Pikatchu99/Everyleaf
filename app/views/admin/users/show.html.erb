@@ -1,0 +1,48 @@
+<div class="container mt-5" >
+  <div class="card">
+    <h5 class="card-header text-center bg-secondary">Account Details</h5>
+    <div class="card-body">
+      <h5 class="card-title">Your Name: <span   class="ms-5 fs-2" style="font-family: 'Gemunu Libre', sans-serif;"><%= @user.name%></span></h5>
+      <h5 class="card-title">Your E-mail: <span class="ms-5 fs-2" style="font-family: 'Gemunu Libre', sans-serif;"><%= @user.email%></span></h5>
+      <% if @user.is_admin %> <h5 class="card-title">Status: <span class="ms-5 fs-2" style="font-family: 'Gemunu Libre', sans-serif;">Administrateur</span></h5><% end %>
+
+      <% if @user.id == current_user.id %>
+      <a data-confirm="Are you sure?" data-method="delete" href="<%= session_path(current_user.id) %>" class="btn btn-danger text-white">Logout</a>
+      <a href="<%= edit_admin_user_path(current_user.id) %>" class="btn btn-info text-white">Edit</a>
+      
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+
+<% if current_user.is_admin %>
+<table class="table mt-5">
+  <thead class="table-primary">
+    <tr>
+      <th scope="col">Author Name</th>
+      <th scope="col">Tasks Name</th>
+      <th scope="col">Details</th>
+      <th scope="col"><a href="<%= tasks_path(by_deadline: "true")%> " class="text-primary">DeadLine<i class="bi bi-chevron-down"></i></a></th>
+      <th scope="col">Status</th>
+      <th scope="col"><a href="<%= tasks_path(by_priority: "true")%> " class="text-primary">Priority<i class="bi bi-chevron-down"></i></a></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.tasks.each do |task| %>
+      <tr>
+        <td><%= task.user.name %></td>
+        <td class="task_row"><%= task.name %></td>
+        <td><%= task.details %></td>
+        <td><%= task.expired_at.to_date %></td>
+        <td><%= task.status %></td>
+        <td><%= task.priority %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

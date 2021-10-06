@@ -1,6 +1,12 @@
-<div class="container d-flex justify-content-between">
-  <div class="fs-2 text-center">
-    Bienvenue <span style="background-color: #007693; font-family: 'ZCOOL KuaiLe', cursive;"><%=@user.name%></span>
+<div class="container mt-5" >
+  <div class="card">
+    <h5 class="card-header text-center bg-secondary">Account Details</h5>
+    <div class="card-body">
+      <h5 class="card-title">Your Name: <span   class="ms-5 fs-2" style="font-family: 'Gemunu Libre', sans-serif;"><%= current_user.name%></span></h5>
+      <h5 class="card-title">Your E-mail: <span class="ms-5 fs-2" style="font-family: 'Gemunu Libre', sans-serif;"><%=current_user.email%></span></h5>
+      <a data-confirm="Are you sure?" data-method="delete" href="<%= session_path(current_user.id)%>" class="btn btn-danger text-white">Logout</a>
+      <a href="<%= tasks_path %>" class="btn btn-primary text-white">Home</a>
+      <a href="<%= edit_user_path(current_user.id) %>" class="btn btn-info text-white">Edit</a>
+    </div>
   </div>
-  <%= link_to "Logout", session_path(current_user.id), method: :DELETE, class: "btn btn-danger mt-2"%>
 </div>

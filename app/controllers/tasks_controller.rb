@@ -1,10 +1,11 @@
 class TasksController < ApplicationController
+  before_action :require_login
   before_action :set_task, only: %i[ show edit update destroy ]
 
   def index
     # raise
     if params[:by_deadline] == "true"
-      @tasks = current_user.tasks.order('expired_at DESC').page params[:page]
+      @tasks = current_user.tasks.order('expired_at DESC').per(5).page params[:page]
     elsif params[:by_priority] == "true"
       @tasks = current_user.tasks.order('priority DESC').page params[:page]
     else
@@ -144,5 +145,12 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:name, :details, :expired_at, :status, :priority)
+    end
+
+    def require_login
+      unless current_user
+        flash[:error] = "You must be logged in to access this section"
+        redirect_to new_session_path
+      end
     end
 end
