@@ -9,3 +9,4 @@
 user = User.new(name: "Modeste", email: "Modeste@gmail.com", password: "......", password_confirmation: "......")
 user.save!
 user.tasks.create(name: "Premier tâche", details: "Je suis la premiere tache", expired_at: DateTime.now, status: "Completed", priority: "high")
+User.create(name: "Modeste", email: "Modeste@gmail.com", password: "......", password_confirmation: "......", is_admin: true)
