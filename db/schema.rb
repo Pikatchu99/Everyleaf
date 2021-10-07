@@ -28,8 +28,6 @@ ActiveRecord::Schema.define(version: 2021_10_07_094444) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_labels_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -37,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_094444) do
     t.text "details", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "expired_at", default: "2021-10-07 15:29:39", null: false
+    t.datetime "expired_at", default: "2021-10-07 17:24:55", null: false
     t.string "status"
     t.integer "priority"
     t.bigint "user_id"
@@ -55,6 +53,5 @@ ActiveRecord::Schema.define(version: 2021_10_07_094444) do
 
   add_foreign_key "labelings", "labels"
   add_foreign_key "labelings", "tasks"
-  add_foreign_key "labels", "users"
   add_foreign_key "tasks", "users"
 end

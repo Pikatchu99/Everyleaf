@@ -18,7 +18,6 @@
       <th scope="col"><a href="<%= tasks_path(by_deadline: "true")%> " class="text-primary">DeadLine<i class="bi bi-chevron-down"></i></a></th>
       <th scope="col">Status</th>
       <th scope="col"><a href="<%= tasks_path(by_priority: "true")%> " class="text-primary">Priority<i class="bi bi-chevron-down"></i></a></th>
-      <th>Labels</th>
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
@@ -33,11 +32,6 @@
         <td><%= task.expired_at.to_date %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
-        <td>
-          <%task.labels.all.each do |label|%>
-          <%= label.name %> <br>
-          <%end%>
-        </td>
         <td><%= link_to 'Show', task, :class => "btn btn-outline-primary" %></td>
         <td><%= link_to 'Edit', edit_task_path(task), :class => "btn btn-outline-success" %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger" %></td>
