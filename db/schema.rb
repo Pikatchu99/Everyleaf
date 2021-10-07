@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2021_10_07_094444) do
+=======
+ActiveRecord::Schema.define(version: 2021_10_07_064337) do
+>>>>>>> 122a47303e4717c5af17a1a4beb902d40c4f110f
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,8 +30,17 @@ ActiveRecord::Schema.define(version: 2021_10_07_094444) do
 
   create_table "labels", force: :cascade do |t|
     t.string "name"
+<<<<<<< HEAD
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+=======
+    t.bigint "task_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["task_id"], name: "index_labels_on_task_id"
+    t.index ["user_id"], name: "index_labels_on_user_id"
+>>>>>>> 122a47303e4717c5af17a1a4beb902d40c4f110f
   end
 
   create_table "tasks", force: :cascade do |t|
