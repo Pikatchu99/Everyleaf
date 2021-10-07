@@ -11,6 +11,7 @@ class TasksController < ApplicationController
     else
       @tasks = current_user.tasks.order('created_at DESC').page params[:page]
     end
+    # @labels = Label.where(user_id: nil).or(Label.where(user_id: current_user.id))
   end
 
   def show
@@ -18,9 +19,11 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @labels = Label.all
   end
 
   def edit
+    @labels = Label.all
   end
 
   def create
@@ -144,7 +147,7 @@ class TasksController < ApplicationController
 
 
     def task_params
-      params.require(:task).permit(:name, :details, :expired_at, :status, :priority)
+      params.require(:task).permit(:name, :details, :expired_at, :status, :priority, label_ids: [])
     end
 
     def require_login
