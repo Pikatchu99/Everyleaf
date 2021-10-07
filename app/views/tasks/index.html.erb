@@ -1,11 +1,30 @@
 <div class="pb-5"></div>
 
-<div class="d-flex">
+<div class="d-flex justify-content-between">
+
 <h1>Tasks</h1>
+
 <div><a href="<%= new_task_path %>" class="btn btn-outline-success mt-2 ms-5">New Task</a></div>
 
 <div><a href="<%= admin_users_path %>" class="btn btn-outline-success mt-2 ms-5">Management Users</a></div>
+<div class="d-flex" style="margin-right: 0;">
+        <%= form_with(url: search_tasks_path, method: :get, local: true) do |f| %>
+        <% if defined? @search_title %>
+          <%= f.text_field :search_title, value: @search_title, class:'form-control me-2'%>
+        <% else %>
+        <span class="pe-3">By name </span>   <%= f.text_field :search_title %>
+        <% end %>
+        <span class="ps-5 pe-3"> By status </span> <%= f.select :search_status, ['Unstarted', 'In progress', 'Completed'], prompt: 'status' %>
+        <span class="ps-5 pe-3"> By priority </span> <%= f.select :search_priority, Task.priorities.map { |k, v| [k, v] }, class: 'search_priority form-control', prompt: 'priority'%>
 
+
+          <span class="ps-5 pe-3">
+          By label <%= f.select :search_label, Label.all.collect { |p| [ p.name, p.id ] }, include_blank: true %>
+          </span>
+          <%= f.submit 'search' ,class:'btn btn-outline-success me-5'%>
+
+        <% end %>
+      </div>
 </div>
 
 

@@ -36,29 +36,9 @@
           <a class="nav-link text-white" aria-current="page" href="<%= user_path(current_user.id) %>">My Account</a>
           <% end %>
         </li>
-        <li class="nav-item">
-        <%= link_to "Logout", session_path(current_user.id), method: :DELETE, class: "nav-link text-white"%>
-        </li>
-        <% end %>
       </ul>
-      <div class="d-flex">
-        <%= form_with(url: search_tasks_path, method: :get, local: true) do |f| %>
-        <% if defined? @search_title %>
-          <%= f.text_field :search_title, value: @search_title, class:'form-control me-2'%>
-        <% else %>
-        <span class="pe-3">By name </span>   <%= f.text_field :search_title %>
-        <% end %>
-        <span class="ps-5 pe-3"> By status </span> <%= f.select :search_status, ['Unstarted', 'In progress', 'Completed'], prompt: 'status' %>
-        <span class="ps-5 pe-3"> By priority </span> <%= f.select :search_priority, Task.priorities.map { |k, v| [k, v] }, class: 'search_priority form-control', prompt: 'priority'%>
-
-
-          <span class="ps-5 pe-3">
-          By label <%= f.select :search_label, Label.all.collect { |p| [ p.name, p.id ] }, include_blank: true %>
-          </span>
-          <%= f.submit 'search' ,class:'btn btn-outline-light'%>
-
-        <% end %>
-      </div>
+      <%= link_to "Logout", session_path(current_user.id), method: :DELETE, class: "nav-link text-white btn btn-outline-danger "%>
+      <% end %>
     </div>
   </div>
 </nav>
