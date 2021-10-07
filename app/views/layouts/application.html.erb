@@ -51,6 +51,10 @@
         <span class="ps-5 pe-3"> By status </span> <%= f.select :search_status, ['Unstarted', 'In progress', 'Completed'], prompt: 'status' %>
         <span class="ps-5 pe-3"> By priority </span> <%= f.select :search_priority, Task.priorities.map { |k, v| [k, v] }, class: 'search_priority form-control', prompt: 'priority'%>
 
+
+          <span class="ps-5 pe-3">
+          By label <%= f.select :search_label, Label.all.collect { |p| [ p.name, p.id ] }, include_blank: true %>
+          </span>
           <%= f.submit 'search' ,class:'btn btn-outline-light'%>
 
         <% end %>

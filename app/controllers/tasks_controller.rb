@@ -24,7 +24,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     @task.user_id = current_user.id
     # p current_user
 
@@ -59,82 +59,126 @@ class TasksController < ApplicationController
     end
   end
 
-
   # def search
+
   #   session[:search] = {'name' => params[:search_title], 'status' => params[:search_status], 'priority' => params[:search_priority]}
+   
   #   if params[:search_title].present?
   #     if params[:search_status].present?
   #       if params[:search_priority].present?
-  #         @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status]).order_by_priority(params[:search_priority])
+  #         @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).page params[:page] 
   #       else
-  #         @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status])
+  #         @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status]).page params[:page] 
   #       end
   #     elsif params[:search_priority].present?
-  #       @tasks = Task.all.title_search(params[:search_title]).order_by_priority(params[:search_priority])
+  #       @tasks = Task.all.title_search(params[:search_title]).order_by_priority(params[:search_priority]).page params[:page] 
   #     else
-  #       @tasks = Task.all.title_search(params[:search_title])
+  #       @tasks = Task.all.title_search(params[:search_title]).page params[:page] 
 
   #     end
+
+
   #   elsif params[:search_status].present?
       
   #     if params[:search_priority].present?
-  #       @tasks = Task.all.order_by_status(params[:search_status]).order_by_priority(params[:search_priority])
+  #       @tasks = Task.all.order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).page params[:page] 
   #     else
-  #       @tasks = Task.all.order_by_status(params[:search_status])
+  #       @tasks = Task.all.order_by_status(params[:search_status]).page params[:page] 
   #     end
+
+    
   #   elsif params[:search_priority].present?
       
   #     if params[:search_status].present?
-  #       @tasks = Task.all.order_by_priority(params[:search_priority]).order_by_status(params[:search_status])
+  #       @tasks = Task.all.order_by_priority(params[:search_priority]).order_by_status(params[:search_status]).page params[:page] 
   #     else
-  #       @tasks = Task.all.order_by_priority(params[:search_priority])
+  #       @tasks = Task.all.order_by_priority(params[:search_priority]).page params[:page] 
   #     end
+
+    
   #   else
   #     @tasks = Task.all
   #   end
-  #   # @labels = Label.where(user_id: nil).or(Label.where(user_id: current_user.id))
+  
+  #   #@labels = Label.where(user_id: nil).or(Label.where(user_id: current_user.id))
+    
   #   render :index
   # end
 
-
   def search 
+    @labels = Label.where(user_id: nil).or(Label.where(user_id: current_user.id))
     session[:search] = {'name' => params[:search_title], 'status' => params[:search_status], 'priority' => params[:search_priority]}
    
     if params[:search_title].present?
       if params[:search_status].present?
         if params[:search_priority].present?
-          @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).page params[:page] 
+          if params[:search_label].present?
+          @tasks = current_user.tasks.title_search(params[:search_title]).order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).label_search(params[:search_label]).page params[:page] 
+          else 
+            @tasks = current_user.tasks.title_search(params[:search_title]).order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).page params[:page] 
+          end
         else
-          @tasks = Task.all.title_search(params[:search_title]).order_by_status(params[:search_status]).page params[:page] 
+          @tasks = current_user.tasks.title_search(params[:search_title]).order_by_status(params[:search_status]).page params[:page] 
         end
       elsif params[:search_priority].present?
-        @tasks = Task.all.title_search(params[:search_title]).order_by_priority(params[:search_priority]).page params[:page] 
+        @tasks = current_user.tasks.title_search(params[:search_title]).order_by_priority(params[:search_priority]).page params[:page] 
       else
-        @tasks = Task.all.title_search(params[:search_title]).page params[:page] 
+        @tasks = current_user.tasks.title_search(params[:search_title]).page params[:page] 
 
       end
+
+
     elsif params[:search_status].present?
       
       if params[:search_priority].present?
-        @tasks = Task.all.order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).page params[:page] 
+        if params[:search_label].present?
+          @tasks = current_user.tasks.order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).label_search(params[:search_label]).page params[:page] 
+        else
+           @tasks = current_user.tasks.order_by_status(params[:search_status]).order_by_priority(params[:search_priority]).page params[:page]
+        end
+          
       else
-        @tasks = Task.all.order_by_status(params[:search_status]).page params[:page] 
+        @tasks = current_user.tasks.order_by_status(params[:search_status]).page params[:page] 
       end
+
+      
     elsif params[:search_priority].present?
       
       if params[:search_status].present?
-        @tasks = Task.all.order_by_priority(params[:search_priority]).order_by_status(params[:search_status]).page params[:page] 
+        if params[:search_label].present?
+          @tasks = current_user.tasks.order_by_priority(params[:search_priority]).order_by_status(params[:search_status]).label_search(params[:search_label]).page params[:page]
+        else
+          @tasks = current_user.tasks.order_by_priority(params[:search_priority]).order_by_status(params[:search_status]).page params[:page] 
+        end
+        
       else
-        @tasks = Task.all.order_by_priority(params[:search_priority]).page params[:page] 
+        @tasks = current_user.tasks.order_by_priority(params[:search_priority]).page params[:page] 
       end
+
+
+    elsif params[:search_label].present?
+      
+      if params[:search_status].present?
+        if params[:search_priority].present?
+          @tasks = current_user.tasks.order_by_priority(params[:search_priority]).order_by_status(params[:search_status]).label_search(params[:search_label]).page params[:page]
+        else
+          @tasks = current_user.tasks.label_search(params[:search_label]).order_by_status(params[:search_status]).page params[:page] 
+        end
+        
+      else
+        @tasks = current_user.tasks.label_search(params[:search_label]).page params[:page] 
+      end
+      
     else
-      @tasks = Task.all
+      @tasks = current_user.tasks
     end
   
     # @labels = Label.where(user_id: nil).or(Label.where(user_id: current_user.id))
     
     render :index
   end
+
+
 
   private
 
@@ -144,7 +188,7 @@ class TasksController < ApplicationController
 
 
     def task_params
-      params.require(:task).permit(:name, :details, :expired_at, :status, :priority)
+      params.require(:task).permit(:name, :details, :expired_at, :status, :priority, label_ids: [])
     end
 
     def require_login

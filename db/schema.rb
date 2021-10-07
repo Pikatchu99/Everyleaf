@@ -10,17 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_05_121152) do
+ActiveRecord::Schema.define(version: 2021_10_07_094444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "labelings", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "label_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "index_labelings_on_label_id"
+    t.index ["task_id"], name: "index_labelings_on_task_id"
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "tasks", force: :cascade do |t|
     t.string "name", null: false
     t.text "details", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "expired_at", default: "2021-10-04 07:39:50", null: false
+    t.datetime "expired_at", default: "2021-10-07 15:29:39", null: false
     t.string "status"
     t.integer "priority"
     t.bigint "user_id"
@@ -36,5 +51,7 @@ ActiveRecord::Schema.define(version: 2021_10_05_121152) do
     t.boolean "is_admin"
   end
 
+  add_foreign_key "labelings", "labels"
+  add_foreign_key "labelings", "tasks"
   add_foreign_key "tasks", "users"
 end

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :task do
-    name { "I'm title" }
+    name { "title" }
     details {"I'm description"}
     expired_at { DateTime.now }
   end

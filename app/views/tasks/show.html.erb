@@ -1,31 +1,30 @@
-<div class="pb-5"></div>
-<p>
-  <strong>Name:</strong>
-  <%= @task.name %>
-</p>
-
-<p>
-  <strong>Details:</strong>
-  <%= @task.details %>
-</p>
-
-
-<p>
-  <strong>Expired_at:</strong>
-  <%= @task.expired_at.to_date %>
-</p>
-
-<p>
-  <strong>Status</strong>
-  <%= @task.status %>
-</p>
-
-
-<p>
-  <strong>Priority</strong>
-  <%= @task.priority %>
-</p>
-
-
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<div class="container mt-5">
+  <div class="card text-center">
+    <div class="card-header">
+      <strong>Name:</strong>
+      <%= @task.name %>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">  <strong>Details: </strong><%= @task.details %></h5>
+      <h5 class="card-title"><strong>Expired_at: </strong><%= @task.expired_at.to_date %></h5>
+      <h5 class="card-title"><strong>Status: </strong><%= @task.status %></h5>
+      <h5 class="card-title"><strong>Priority: </strong><%= @task.priority %></h5>
+      <h5 class="card-title">
+        <div class="btn btn-info position-relative">
+          Labels
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+            <%= @task.labels.count%>
+          </span>
+        </div>
+      </h5>
+      <% @task.labels.each do |p| %>
+      <span><span class="badge bg-success"><%= p.name %></span></span>
+      <% end %>
+    </div>
+    <div class="card-footer text-muted">
+  <%= link_to 'Edit', edit_task_path(@task) %> |
+  <%= link_to 'Back', tasks_path %>
+  
+    </div>
+  </div>
+</div>
